@@ -418,7 +418,7 @@ void UART_DisableRxErrors(UART_HandleTypeDef *huart)
 
 void poweronMelody(void) {
     buzzerCount = 0;  // prevent interraction with beep counter
-    for (int i = 8; i >= 0; i--) {
+    for (int i = 8; i >= 0; i-=2) {
       buzzerFreq = (uint8_t)i;
       HAL_Delay(100);
     }
@@ -1545,7 +1545,7 @@ void poweroff(void) {
   #endif
   buzzerCount = 0;  // prevent interraction with beep counter
   buzzerPattern = 0;
-  for (int i = 0; i < 8; i++) {
+  for (int i = 0; i < 8; i+=2) {
     buzzerFreq = (uint8_t)i;
     HAL_Delay(100);
   }
