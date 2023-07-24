@@ -1288,6 +1288,27 @@ void usart_process_command(SerialCommand *command_in, SerialCommand *command_out
         #endif
       }
     }
+  } else if (command_in->start == SERIAL_START_FRAME_MODE_CHANGE) {
+    checksum = (uint16_t)(command_in->start ^ command_in->steer ^ command_in->speed);
+    if (command_in->checksum == checksum) {
+      if (command_in->steer == SERIAL_MODE_CHANGE_VLT) {
+        ctrlModReqRaw = VLT_MODE;
+      } else if (command_in->steer == SERIAL_MODE_CHANGE_TRQ) {
+        ctrlModReqRaw = TRQ_MODE;
+      }
+
+      if (usart_idx == 2) {             // Sideboard USART2
+        #ifdef CONTROL_SERIAL_USART2
+        timeoutFlgSerial_L = 0;         // Clear timeout flag
+        timeoutCntSerial_L = 0;         // Reset timeout counter
+        #endif
+      } else if (usart_idx == 3) {      // Sideboard USART3
+        #ifdef CONTROL_SERIAL_USART3
+        timeoutFlgSerial_R = 0;         // Clear timeout flag
+        timeoutCntSerial_R = 0;         // Reset timeout counter
+        #endif
+      }
+    }
   }
   #endif
 }
