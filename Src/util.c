@@ -425,6 +425,16 @@ void poweronMelody(void) {
     buzzerFreq = 0;
 }
 
+void poweroffMelody() {
+  buzzerCount = 0;  // prevent interraction with beep counter
+  buzzerPattern = 0;
+  for (int i = 0; i < 8; i+=2) {
+    buzzerFreq = (uint8_t)i;
+    HAL_Delay(100);
+  }
+  buzzerFreq = 0;
+}
+
 void beepCount(uint8_t cnt, uint8_t freq, uint8_t pattern) {
     buzzerCount   = cnt;
     buzzerFreq    = freq;
@@ -1564,12 +1574,7 @@ void poweroff(void) {
   #if defined(DEBUG_SERIAL_USART2) || defined(DEBUG_SERIAL_USART3)
   printf("-- Motors disabled --\r\n");
   #endif
-  buzzerCount = 0;  // prevent interraction with beep counter
-  buzzerPattern = 0;
-  for (int i = 0; i < 8; i+=2) {
-    buzzerFreq = (uint8_t)i;
-    HAL_Delay(100);
-  }
+  poweroffMelody();
   saveConfig();
   HAL_GPIO_WritePin(OFF_PORT, OFF_PIN, GPIO_PIN_RESET);
   while(1) {}

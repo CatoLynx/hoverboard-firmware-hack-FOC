@@ -75,6 +75,7 @@ void UART_DisableRxErrors(UART_HandleTypeDef *huart);
 
 // General Functions
 void poweronMelody(void);
+void poweroffMelody(void);
 void beepCount(uint8_t cnt, uint8_t freq, uint8_t pattern);
 void beepLong(uint8_t freq);
 void beepShort(uint8_t freq);
