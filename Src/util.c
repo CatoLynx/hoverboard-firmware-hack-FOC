@@ -1574,7 +1574,7 @@ void poweroff(void) {
   #if defined(DEBUG_SERIAL_USART2) || defined(DEBUG_SERIAL_USART3)
   printf("-- Motors disabled --\r\n");
   #endif
-  poweroffMelody();
+  //poweroffMelody();
   saveConfig();
   HAL_GPIO_WritePin(OFF_PORT, OFF_PIN, GPIO_PIN_RESET);
   while(1) {}
